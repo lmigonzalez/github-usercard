@@ -1,3 +1,5 @@
+import axios, { Axios } from "axios";
+
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
@@ -28,7 +30,7 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -58,3 +60,97 @@ const followersArray = [];
     luishrd
     bigknell
 */
+
+// function gitHubUser (user){
+
+
+
+//   axios.get(`https://api.github.com/users/${user}`)
+//   .then(res =>{
+//     document.querySelector('.cards').appendChild(userMaker(res.data))
+//   })
+  
+//   .catch(err =>{
+//     console.error(err)
+//   })
+
+
+  
+// }
+
+
+followersArray.forEach(function(element){
+  axios.get(`https://api.github.com/users/${element}`)
+    .then(res =>{
+      document.querySelector('.cards').appendChild(userMaker(res.data))
+    })
+    
+    .catch(err =>{
+      console.error(err)
+    })
+})
+
+
+
+
+gitHubUser('lmigonzalez')
+
+
+
+
+function userMaker(obj){
+
+  const userCard = document.createElement('div');
+  userCard.classList.add('card');
+
+  const userImg = document.createElement('img');
+  userImg.src = obj.avatar_url;
+
+  const userInf = document.createElement('div');
+  userInf.classList.add('card-info');
+
+  const userName = document.createElement('h3');
+  userName.classList.add('name');
+  userName.textContent = obj.name;
+  
+
+  const user_userName = document.createElement('p');
+  user_userName.classList.add('username');
+  user_userName.textContent = obj.login;
+
+  const userLocation = document.createElement('p');
+  userLocation.textContent = obj.location;
+  
+  const userProfile = document.createElement('p');
+
+  const userUrl = document.createElement('a');
+  userUrl.src = obj.html_url;
+
+  const userFollowers = document.createElement('p');
+  userFollowers.textContent = obj.followers;
+
+  const userFollowing = document.createElement('p');
+  userFollowing.textContent = obj.following;
+
+  const userBio = document.createElement('p');
+  userBio.textContent = obj.bio;
+
+  userLocation.appendChild(userUrl);
+
+  userInf.appendChild(userName);
+  userInf.appendChild(user_userName);
+  userInf.appendChild(userLocation);
+  userInf.appendChild(userProfile);
+  userInf.appendChild(userFollowers);
+  userInf.appendChild(userFollowing);
+  userInf.appendChild(userBio);
+
+  userCard.appendChild(userImg)
+  userCard.appendChild(userInf)
+
+  
+  return userCard;
+}
+
+
+
